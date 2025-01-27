@@ -3,8 +3,6 @@ import firebase_admin
 from firebase_admin import credentials, firestore
 import hashlib
 
-from Quiz_vuca import nome_usuario
-
 if not firebase_admin._apps:
     cred = credentials.Certificate("credenciais_quiz.json")
     firebase_admin.initialize_app(cred)
