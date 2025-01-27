@@ -3,7 +3,7 @@ import firebase_admin
 from firebase_admin import credentials, firestore
 import hashlib
 
-url = 'https://raw.githubusercontent.com/usuário/repositorio/branch/credenciais_quiz.json'
+url = 'https://github.com/Snebur0101/quiz_vuca_dimamico/blob/main/credenciais_quiz.json'
 
 response = requests.get(url)
 with tempfile.NamedTemporaryFile(delete=False) as tmp_file:
