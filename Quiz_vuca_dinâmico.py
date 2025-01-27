@@ -25,53 +25,59 @@ usuarios = [
         {"nome": "Tiago", "senha": "Tiago123", "tipo": "respondente"}
     ]
 
+if 'logged_in' not in st.session_state:
+    st.session_state.logged_in = False
+    st.session_state.tipo_usuario = None
+
 st.sidebar.title("Escolha uma opção:")
 opcao = st.sidebar.radio("Ação", ["Login"])
 
 if opcao == "Login":
-    st.title("Login")
+    if not st.session_state.logged_in:
+        st.title("Login")
 
-    nome_usuario = st.text_input('Digite o seu login')
-    senha_usuario = st.text_input('Digite a sua senha', type='password')
+        nome_usuario = st.text_input('Digite o seu login')
+        senha_usuario = st.text_input('Digite a sua senha', type='password')
 
-    if st.button("Entrar"):
-        usuario_encontrado = False
+        if st.button("Entrar"):
 
-        for usuario in usuarios:
-            if usuario['nome'] == nome_usuario and usuario['senha'] == senha_usuario:
-                usuario_encontrado = True
+            for usuario in usuarios:
+                if usuario['nome'] == nome_usuario and usuario['senha'] == senha_usuario:
+                    st.session_state.logged_in = True
+                    st.session_state.tipo_usuario = usuario['tipo']
+                    st.success(f'Bem-vindo,{usuario['nome']}!')
+                    break
+                else:
+                    st.error("Usuário não encontrado!")
+
                 tipo_usuario = usuario['tipo']
+    else:
+        if st.session_state.tipo_usuario == 'criador':
+            st.markdown('## Crie as perguntas do Quiz')
+            pergunta = st.text_input('Digite a pergunta')
+            respostas = st.text_input('Digite as opções de resposta (separe elas por ponto e vírgula)').split(';')
+            gabarito = st.text_input('Resposta correta (precisa que a resposta esteja escrita por extenso)')
 
-                if tipo_usuario == 'criador':
-                    st.markdown('## Crie as perguntas do Quiz')
-                    pergunta = st.text_input('Digite a pergunta')
-                    respostas = st.text_input('Digite as opções de resposta (separe elas por ponto e vírgula)').split(';')
-                    gabarito = st.text_input('Resposta correta (precisa que a resposta esteja escrita por extenso)')
+            if st.button('Salvar Resposta'):
+                if pergunta and respostas and gabarito:
+                    data = {
+                        'pergunta': pergunta,
+                        'respostas': respostas,
+                        'gabarito': gabarito
+                    }
+                    db.collection('perguntas').add(data)
+                    st.success('Pergunta foi salva com sucesso!')
+                else:
+                    st.error(
+                        'Algum campo não foi preenchido, verifique novamente se todos os campos foram preenchidos!')
 
-                    if st.button('Salvar Resposta'):
-                        if pergunta and respostas and gabarito:
-                            data = {
-                                'pergunta': pergunta,
-                                'respostas': respostas,
-                                'gabarito': gabarito
-                            }
-                            db.collection('perguntas').add(data)
-                            st.success('Pergunta foi salva com sucesso!')
-                        else:
-                            st.error(
-                                'Algum campo não foi preenchido, verifique novamente se todos os campos foram preenchidos!')
+        elif st.session_state.tipo_usuario == 'respondente':
+            st.markdown('Responda todas as perguntas abaixo:')
 
-                elif tipo_usuario == 'respondente':
-                    st.markdown('Responda todas as perguntas abaixo:')
+            pergunta_ref = db.collection('perguntas').stream()
+            perguntas = [{'id': p.id, **p.to_dict()} for p in pergunta_ref]
 
-                    pergunta_ref = db.collection('perguntas').stream()
-                    perguntas = [{'id': p.id, **p.to_dict()} for p in pergunta_ref]
-
-                    if perguntas:
-                        for i, pergunta in enumerate(perguntas):
-                            st.markdown(f'### Pergunta {i + 1}: {pergunta["pergunta"]}')
-                            resposta = st.selectbox('Escolha uma opção', pergunta['respostas'], key=pergunta['id'])
-                break
-
-        if not usuario_encontrado:
-                st.error("Usuário não encontrado!")
+            if perguntas:
+                for i, pergunta in enumerate(perguntas):
+                    st.markdown(f'### Pergunta {i + 1}: {pergunta["pergunta"]}')
+                    resposta = st.selectbox('Escolha uma opção', pergunta['respostas'], key=pergunta['id'])
