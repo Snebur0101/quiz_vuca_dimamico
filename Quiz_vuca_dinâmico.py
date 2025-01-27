@@ -4,8 +4,14 @@ from firebase_admin import credentials, firestore
 
 url = 'https://raw.githubusercontent.com/Snebur0101/quiz_vuca_dimamico/refs/heads/main/credenciais_quiz.json'
 
+response = requests.get(url)
+
+with tempfile.NamedTemporaryFile(delete=False) as tmp_file:
+    tmp_file.write(response.content)
+    tmp_file_path = tmp_file.name
+
 if not firebase_admin._apps:
-    cred = credentials.Certificate(url)
+    cred = credentials.Certificate(tmp_file_path)
     firebase_admin.initialize_app(cred)
 
 db = firestore.client()
