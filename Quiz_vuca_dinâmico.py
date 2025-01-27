@@ -5,7 +5,7 @@ import sqlite3
 conn = sqlite3.connect('quiz.db')
 cursor = conn.cursor()
 
-# Criar a tabela de usuários (se não existir)
+# Criar as tabelas de usuários e perguntas (se não existirem)
 cursor.execute('''
 CREATE TABLE IF NOT EXISTS usuarios (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -14,8 +14,6 @@ CREATE TABLE IF NOT EXISTS usuarios (
     tipo TEXT
 )
 ''')
-
-# Criar a tabela de perguntas (se não existir)
 cursor.execute('''
 CREATE TABLE IF NOT EXISTS perguntas (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -79,6 +77,8 @@ if opcao == "Login":
                 st.error("Usuário não encontrado!")
 
     else:
+        st.write(f"Usuário {nome_usuario} está logado como {st.session_state.tipo_usuario}.")
+        
         if st.session_state.tipo_usuario == 'criador':
             st.markdown('## Crie as perguntas do Quiz')
             pergunta = st.text_input('Digite a pergunta')
@@ -107,5 +107,7 @@ if opcao == "Login":
                     st.markdown(f'### Pergunta {i + 1}: {pergunta[1]}')
                     resposta = st.selectbox('Escolha uma opção', pergunta[2].split(';'), key=pergunta[0])
 
-# Fechar a conexão com o banco ao final
-conn.close()
+# Fechar a conexão quando o app for encerrado
+def close_connection():
+    conn.close()
+st.on_session_end(close_connection)
