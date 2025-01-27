@@ -5,7 +5,7 @@ import hashlib
 
 if not firebase_admin._apps:
     cred = credentials.Certificate("credenciais_quiz.json")
-    firebase_admin.initialize_app(cred)
+    firebase_admin.initialize_app(cred, {'httpTimeout': 10})
 
 db = firestore.client()
 
