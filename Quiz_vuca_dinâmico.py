@@ -74,7 +74,7 @@ if opcao == "Login":
                             resposta = st.selectbox('Escolha uma opção', pergunta['respostas'], key=pergunta['id'])
                 break
 
-            else:
+        if not usuario_encontrado:
                 st.error("Usuário não encontrado!")
     else:
         st.error("Todos os campos são obrigatórios!")
