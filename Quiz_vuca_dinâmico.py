@@ -36,12 +36,12 @@ if opcao == "Login":
 
     if st.button("Entrar"):
         usuario_encontrado = False
-        
+
         for usuario in usuarios:
             if usuario['nome'] == nome_usuario and usuario['senha'] == senha_usuario:
                 usuario_encontrado = True
                 tipo_usuario = usuario['tipo']
-                
+
                 if tipo_usuario == 'criador':
                     st.markdown('## Crie as perguntas do Quiz')
                     pergunta = st.text_input('Digite a pergunta')
@@ -72,8 +72,8 @@ if opcao == "Login":
                         for i, pergunta in enumerate(perguntas):
                             st.markdown(f'### Pergunta {i + 1}: {pergunta["pergunta"]}')
                             resposta = st.selectbox('Escolha uma opção', pergunta['respostas'], key=pergunta['id'])
-                 break
-                            
+                break
+
             else:
                 st.error("Usuário não encontrado!")
     else:
