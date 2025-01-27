@@ -1,17 +1,11 @@
 import streamlit as st
 import firebase_admin
 from firebase_admin import credentials, firestore
-import tempfile
 
 url = 'https://github.com/Snebur0101/quiz_vuca_dimamico/blob/main/credenciais_quiz.json'
 
-response = requests.get(url)
-with tempfile.NamedTemporaryFile(delete=False) as tmp_file:
-    tmp_file.write(response.content)
-    tmp_file_path = tmp_file.name
-
 if not firebase_admin._apps:
-    cred = credentials.Certificate(tmp_file_path)
+    cred = credentials.Certificate(url)
     firebase_admin.initialize_app(cred)
 
 db = firestore.client()
