@@ -1,0 +1,3 @@
+firebase-admin
+streamlit-authenticator
+matplotlib
