@@ -2,7 +2,7 @@ import streamlit as st
 import firebase_admin
 from firebase_admin import credentials, firestore
 
-url = 'https://github.com/Snebur0101/quiz_vuca_dimamico/blob/main/credenciais_quiz.json'
+url = 'https://raw.githubusercontent.com/Snebur0101/quiz_vuca_dimamico/refs/heads/main/credenciais_quiz.json'
 
 if not firebase_admin._apps:
     cred = credentials.Certificate(url)
