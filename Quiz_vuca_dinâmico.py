@@ -3,8 +3,6 @@ import firebase_admin
 from firebase_admin import credentials, firestore
 import hashlib
 
-from Quiz_vuca_dinâmico import tipo_usuario
-
 if not firebase_admin._apps:
     cred = credentials.Certificate("credenciais_quiz.json")
     firebase_admin.initialize_app(cred)
@@ -59,7 +57,7 @@ if opcao == "Login":
                         else:
                             st.error(
                                 'Algum campo não foi preenchido, verifique novamente se todos os campos foram preenchidos!')
-                        
+
                 elif tipo_usuario == 'respondente':
                     st.markdown('Responda todas as perguntas abaixo:')
 
