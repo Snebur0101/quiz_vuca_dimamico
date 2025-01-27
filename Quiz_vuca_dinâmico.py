@@ -10,19 +10,19 @@ if not firebase_admin._apps:
 db = firestore.client()
 
 usuarios = [
-        {'nome': 'Marcos', 'senha': hash_password('Torchic123'), 'tipo': 'criador'},
-        {'nome': 'Marcos123', 'senha': hash_password('Torchic123'), 'tipo': 'respondente'},
-        {"nome": "Davi", "senha": hash_password("Davi123"), "tipo": "respondente"},
-        {"nome": "Felipe", "senha": hash_password("Felipe123"), "tipo": "respondente"},
-        {"nome": "Hiago", "senha": hash_password("Hiago123"), "tipo": "respondente"},
-        {"nome": "Ismael", "senha": hash_password("Ismael123"), "tipo": "respondente"},
-        {"nome": "Jônatas", "senha": hash_password("Jônatas123"), "tipo": "respondente"},
-        {"nome": "Levi", "senha": hash_password("Levi123"), "tipo": "respondente"},
-        {"nome": "Márcio", "senha": hash_password("Márcio123"), "tipo": "respondente"},
-        {"nome": "Pedro", "senha": hash_password("Pedro123"), "tipo": "respondente"},
-        {"nome": "Pedro2", "senha": hash_password("Pedro12345"), "tipo": "criador"},
-        {"nome": "Rubens", "senha": hash_password("Rubens123"), "tipo": "respondente"},
-        {"nome": "Tiago", "senha": hash_password("Tiago123"), "tipo": "respondente"}
+        {'nome': 'Marcos', 'senha': 'Torchic123', 'tipo': 'criador'},
+        {'nome': 'Marcos123', 'senha': 'Torchic123', 'tipo': 'respondente'},
+        {"nome": "Davi", "senha": "Davi123", "tipo": "respondente"},
+        {"nome": "Felipe", "senha": "Felipe123", "tipo": "respondente"},
+        {"nome": "Hiago", "senha": "Hiago123", "tipo": "respondente"},
+        {"nome": "Ismael", "senha": "Ismael123", "tipo": "respondente"},
+        {"nome": "Jônatas", "senha": "Jônatas123", "tipo": "respondente"},
+        {"nome": "Levi", "senha": "Levi123", "tipo": "respondente"},
+        {"nome": "Márcio", "senha": "Márcio123", "tipo": "respondente"},
+        {"nome": "Pedro", "senha": "Pedro123", "tipo": "respondente"},
+        {"nome": "Pedro2", "senha": "Pedro12345", "tipo": "criador"},
+        {"nome": "Rubens", "senha": "Rubens123", "tipo": "respondente"},
+        {"nome": "Tiago", "senha": "Tiago123", "tipo": "respondente"}
     ]
 
 st.sidebar.title("Escolha uma opção:")
