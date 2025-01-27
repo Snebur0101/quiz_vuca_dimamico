@@ -3,70 +3,48 @@ import firebase_admin
 from firebase_admin import credentials, firestore
 import hashlib
 
+from Quiz_vuca import nome_usuario
+
 if not firebase_admin._apps:
     cred = credentials.Certificate("credenciais_quiz.json")
-    firebase_admin.initialize_app(cred, {'httpTimeout': 10})
+    firebase_admin.initialize_app(cred)
 
 db = firestore.client()
 
 def hash_password(password):
     return hashlib.sha256(password.encode()).hexdigest()
 
-def obter_tipo_usuario(nome_usuario):
-    user_ref = db.collection('usuarios').document(nome_usuario)
-    user_doc = user_ref.get()
-
-    if user_doc.exists:
-        return user_doc.to_dict().get('tipo')
-    else:
-        return None
+usuarios = [
+        {'nome': 'Marcos', 'senha': hash_password('Torchic123'), 'tipo': 'criador'},
+        {'nome': 'Marcos123', 'senha': hash_password('Torchic123'), 'tipo': 'respondente'},
+        {"nome": "Davi", "senha": hash_password("Davi123"), "tipo": "respondente"},
+        {"nome": "Felipe", "senha": hash_password("Felipe123"), "tipo": "respondente"},
+        {"nome": "Hiago", "senha": hash_password("Hiago123"), "tipo": "respondente"},
+        {"nome": "Ismael", "senha": hash_password("Ismael123"), "tipo": "respondente"},
+        {"nome": "Jônatas", "senha": hash_password("Jônatas123"), "tipo": "respondente"},
+        {"nome": "Levi", "senha": hash_password("Levi123"), "tipo": "respondente"},
+        {"nome": "Márcio", "senha": hash_password("Márcio123"), "tipo": "respondente"},
+        {"nome": "Pedro", "senha": hash_password("Pedro123"), "tipo": "respondente"},
+        {"nome": "Pedro2", "senha": hash_password("Pedro12345"), "tipo": "criador"},
+        {"nome": "Rubens", "senha": hash_password("Rubens123"), "tipo": "respondente"},
+        {"nome": "Tiago", "senha": hash_password("Tiago123"), "tipo": "respondente"}
+    ]
 
 st.sidebar.title("Escolha uma opção:")
-opcao = st.sidebar.radio("Ação", ["Login", "Registrar"])
+opcao = st.sidebar.radio("Ação", ["Login"])
 
-if opcao == "Registrar":
-    st.title("Registrar Novo Usuário")
-
-    novo_usuario = st.text_input("Digite o nome de usuário:")
-    setor = st.selectbox('Selecione o setor do usuário:', ['Suporte','Implantação','CX'])
-    nova_senha = st.text_input("Digite a senha:", type="password")
-    tipo_usuario = st.selectbox("Selecione o tipo de usuário:", ["criador", "respondente"])
-
-    if st.button("Registrar"):
-        if novo_usuario and nova_senha and tipo_usuario and setor:
-            user_ref = db.collection('usuarios').document(novo_usuario)
-
-            if user_ref.get().exists:
-                st.error("Usuário já existe! Escolha outro nome.")
-            else:
-                data = {
-                    'nome': novo_usuario,
-                    'setor': setor,
-                    'senha': hash_password(nova_senha),
-                    'tipo': tipo_usuario
-                }
-                user_ref.set(data)
-                st.success("Usuário registrado com sucesso!")
-        else:
-            st.error("Todos os campos são obrigatórios!")
-
-elif opcao == "Login":
+if opcao == "Login":
     st.title("Login")
 
-    nome_usuario = st.text_input('Digite o seu nome de usuário')
-    senha_usuario = st.text_input('Digite sua senha', type='password')
+    nome_usuario = st.text_input('Digite o seu login')
+    senha_usuario = st.text_input('Digite a sua senha', type='password')
 
     if st.button("Entrar"):
-        if nome_usuario and senha_usuario:
-            user_ref = db.collection('usuarios').document(nome_usuario)
-            user_doc = user_ref.get()
+        for usuario in usuarios:
+            if usuario['nome'] == nome_usuario and usuario['senha'] == hash_password(senha_usuario):
+                tipo_usuario = usuario['tipo']
 
-            if user_doc.exists:
-                dados_usuario = user_doc.to_dict()
-                senha_hash = hash_password(senha_usuario)
-
-                if senha_hash == dados_usuario['senha']:
-                    tipo_usuario = dados_usuario['tipo']
+                if tipo_usuario = usuario['tipo']:
 
                     if tipo_usuario == 'criador':
                         st.markdown('## Crie as perguntas do Quiz')
