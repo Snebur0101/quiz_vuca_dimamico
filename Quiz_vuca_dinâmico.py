@@ -9,9 +9,6 @@ if not firebase_admin._apps:
 
 db = firestore.client()
 
-def hash_password(password):
-    return hashlib.sha256(password.encode()).hexdigest()
-
 usuarios = [
         {'nome': 'Marcos', 'senha': hash_password('Torchic123'), 'tipo': 'criador'},
         {'nome': 'Marcos123', 'senha': hash_password('Torchic123'), 'tipo': 'respondente'},
@@ -39,7 +36,7 @@ if opcao == "Login":
 
     if st.button("Entrar"):
         for usuario in usuarios:
-            if usuario['nome'] == nome_usuario and usuario['senha'] == hash_password(senha_usuario):
+            if usuario['nome'] == nome_usuario and usuario['senha'] == senha_usuario:
                 tipo_usuario = usuario['tipo']
 
                 if tipo_usuario == usuario['tipo']:
