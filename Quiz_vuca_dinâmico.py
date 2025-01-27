@@ -44,7 +44,7 @@ if opcao == "Login":
             if usuario['nome'] == nome_usuario and usuario['senha'] == hash_password(senha_usuario):
                 tipo_usuario = usuario['tipo']
 
-                if tipo_usuario = usuario['tipo']:
+                if tipo_usuario == usuario['tipo']:
 
                     if tipo_usuario == 'criador':
                         st.markdown('## Crie as perguntas do Quiz')
