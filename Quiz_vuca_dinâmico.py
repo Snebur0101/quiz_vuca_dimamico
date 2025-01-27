@@ -45,8 +45,7 @@ if opcao == "Login":
                 if tipo_usuario == 'criador':
                     st.markdown('## Crie as perguntas do Quiz')
                     pergunta = st.text_input('Digite a pergunta')
-                    respostas = st.text_input(
-                        'Digite as opções de resposta (separe elas por ponto e vírgula)').split(';')
+                    respostas = st.text_input('Digite as opções de resposta (separe elas por ponto e vírgula)').split(';')
                     gabarito = st.text_input('Resposta correta (precisa que a resposta esteja escrita por extenso)')
 
                     if st.button('Salvar Resposta'):
@@ -76,5 +75,3 @@ if opcao == "Login":
 
         if not usuario_encontrado:
                 st.error("Usuário não encontrado!")
-    else:
-        st.error("Todos os campos são obrigatórios!")
