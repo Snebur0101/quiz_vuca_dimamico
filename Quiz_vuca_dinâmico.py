@@ -1,6 +1,7 @@
 import streamlit as st
 import firebase_admin
 from firebase_admin import credentials, firestore
+import tempfile
 
 url = 'https://raw.githubusercontent.com/Snebur0101/quiz_vuca_dimamico/refs/heads/main/credenciais_quiz.json'
 
