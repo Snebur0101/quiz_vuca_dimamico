@@ -65,11 +65,13 @@ if opcao == "Login":
                         'respostas': respostas,
                         'gabarito': gabarito
                     }
-                    db.collection('perguntas').add(data)
-                    st.success('Pergunta foi salva com sucesso!')
+                    try:
+                        db.collection('perguntas').add(data)
+                        st.success('Pergunta foi salva com sucesso!')
+                    except Exception as e:
+                        st.error(f'Ocorreu um erro ao salvar a pergunta: {e}')
                 else:
-                    st.error(
-                        'Algum campo não foi preenchido, verifique novamente se todos os campos foram preenchidos!')
+                    st.error('Preencha todos os campos antes de salvar!')
 
         elif st.session_state.tipo_usuario == 'respondente':
             st.markdown('Responda todas as perguntas abaixo:')
